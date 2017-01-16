@@ -1,0 +1,13 @@
+Tools:
+Visual Studio 2015 - C# 6.0
+Nuget packages will be downloaded automatically during the build
+
+Decisions taken:
+
+- Creating separate CSVReader and CSVWriter
+- Because backward compatibility of CSVReaderWriter was required, its interface was unchanged but it was marked as Obsolete and it's only a wrapper for new classes.
+  I added parameterless constructor with creation of required classes (this could be encapsulated in Factory) and also added second constructor that could be used if DI were supported
+- Because .Net does not provide abstractions for System.IO, custom wrappers were created. There are ready nuget packages serving that purpose but they don't cover
+  everything, for example StreamWriter.WriteLine(). I didn't want to change the logic to use StreamWriter.Write() and Environment.NewLine, so I created minimal
+  implementation to suffice needs of this refactoring.
+- Only new classes are covered by unit tests.
